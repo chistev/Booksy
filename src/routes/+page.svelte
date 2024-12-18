@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
     import Modal from "$lib/components/home/Modal.svelte";
 
     let showModal = false;
     let currentWord = "Bold"; 
     let words = ["Bold", "Free", "Yourself", "Confident", "Colorful", "Brave"];
-    let typingInterval;
+    let typingInterval: number;
 
     function toggleModal() {
         showModal = !showModal;
