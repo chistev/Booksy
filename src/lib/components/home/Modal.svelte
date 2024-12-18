@@ -1,84 +1,36 @@
-<script>
-	import Modal from "$lib/components/home/Modal.svelte";
+<script lang="ts">
+    export let showModal: boolean = false;
+    export let toggleModal: () => void;  
 
-    let showModal = false; 
-
-    function toggleModal() {
-        showModal = !showModal;
+    function closeModal() {
+        toggleModal();  
     }
 </script>
 
-<header class="header">
-    <div class="logo">booksy</div>
-
-    <nav class="nav">
-        <button class="login" on:click={toggleModal}>
-            <i class="bi bi-person"></i> Log In / Sign Up
-        </button>
-        <button class="cta-button">List your business</button>
-    </nav>
-</header>
-
-<Modal {showModal} {toggleModal} />
-
+{#if showModal}
+    <div class="modal-backdrop" on:click={closeModal}>
+        <div class="modal" on:click|stopPropagation>
+            <button class="close" on:click={closeModal}>&times;</button>
+            <h2>Get started</h2>
+            <p>Create an account or log in to book and manage your appointments.</p>
+            <input type="email" placeholder="Email" class="input-field" />
+            <button class="continue-button">Continue</button>
+            <div class="divider">OR</div>
+            <button class="social-button facebook">
+                <i class="bi bi-facebook"></i> Continue with Facebook
+            </button>
+            <button class="social-button apple">
+                <i class="bi bi-apple"></i> Continue with Apple
+            </button>
+            <button class="social-button google">
+                <img src="https://www.google.com/favicon.ico" alt="Google" class="google-icon" />
+                Continue with Google
+            </button>
+        </div>
+    </div>
+{/if}
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: #000;
-        color: white;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .nav {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .login {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .login:hover {
-        text-decoration: underline;
-    }
-
-    .cta-button {
-        background: white;
-        color: black;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .cta-button:hover {
-        background: #ddd;
-    }
-
     .modal-backdrop {
         position: fixed;
         top: 0;
