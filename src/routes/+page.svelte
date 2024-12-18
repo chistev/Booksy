@@ -1,11 +1,42 @@
 <script>
-	import Modal from "$lib/components/home/Modal.svelte";
+    import Modal from "$lib/components/home/Modal.svelte";
 
-    let showModal = false; 
+    let showModal = false;
+    let currentWord = "Bold"; 
+    let words = ["Bold", "Free", "Yourself", "Confident", "Colorful", "Brave"];
+    let typingInterval;
 
     function toggleModal() {
         showModal = !showModal;
     }
+
+    function startTyping() {
+        let wordIndex = 0;
+        let charIndex = 0;
+        const typingSpeed = 100; 
+        const switchSpeed = 2000;
+
+        function typeWord() {
+            if (charIndex < words[wordIndex].length) {
+                currentWord = words[wordIndex].slice(0, charIndex + 1);
+                charIndex++;
+            } else {
+                clearInterval(typingInterval);
+                setTimeout(() => {
+                    wordIndex = (wordIndex + 1) % words.length;
+                    charIndex = 0;
+                    typingInterval = setInterval(typeWord, typingSpeed);
+                }, switchSpeed);
+            }
+        }
+
+        typingInterval = setInterval(typeWord, typingSpeed);
+    }
+
+    import { onMount } from "svelte";
+    onMount(() => {
+        startTyping();
+    });
 </script>
 
 <header class="header">
@@ -15,12 +46,17 @@
         <button class="login" on:click={toggleModal}>
             <i class="bi bi-person"></i> Log In / Sign Up
         </button>
-        <button class="cta-button">List your business</button>
     </nav>
 </header>
 
-<Modal {showModal} {toggleModal} />
+<section class="be-bold">
+    <h1>
+        <span class="be-text">Be</span>
+        <span class="animated-text">{currentWord}</span>
+    </h1>
+</section>
 
+<Modal {showModal} {toggleModal} />
 
 <style>
     * {
@@ -34,7 +70,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem 2rem;
-        background: #000;
+        background: #000; 
         color: white;
     }
 
@@ -65,139 +101,46 @@
         text-decoration: underline;
     }
 
-    .cta-button {
-        background: white;
-        color: black;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .cta-button:hover {
-        background: #ddd;
-    }
-
-    .modal-backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+    .be-bold {
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 999;
-    }
-
-    .modal {
-        background: white;
-        width: 400px;
-        padding: 2rem;
-        border-radius: 8px;
-        position: relative;
-        text-align: center;
-    }
-
-    .modal h2 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .modal p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-
-    .close {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .input-field {
-        width: 100%;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .continue-button {
-        width: 100%;
-        background: #e6e6e6;
-        color: #888;
-        border: none;
-        padding: 0.75rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        border-radius: 4px;
-        cursor: not-allowed;
-    }
-
-    .divider {
-        margin: 1rem 0;
-        font-size: 0.8rem;
-        color: #aaa;
-        position: relative;
-    }
-
-    .divider::before,
-    .divider::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        background: #ccc;
-    }
-
-    .divider::before {
-        left: 0;
-    }
-
-    .divider::after {
-        right: 0;
-    }
-
-    .social-button {
-        width: 100%;
-        padding: 0.75rem;
-        margin-bottom: 0.5rem;
-        border: none;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .social-button.facebook {
-        background: #1877f2;
+        background: #000; 
         color: white;
+        padding: 2rem 0; 
     }
 
-    .social-button.apple {
-        background: #000;
-        color: white;
+    .be-bold h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        display: flex; 
+        align-items: center; 
     }
 
-    .social-button.google {
-        background: #fff;
-        border: 1px solid #ccc;
-        color: black;
+    .be-text {
+        margin-right: 0.5rem; 
     }
 
-    .google-icon {
-        width: 16px;
-        height: 16px;
+    .animated-text {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+        animation: typing 1.5s steps(10) forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+        from {
+            width: 0;
+        }
+        to {
+            width: max-content;
+        }
+    }
+
+    @keyframes blink {
+        50% {
+            border-color: transparent;
+        }
     }
 </style>
