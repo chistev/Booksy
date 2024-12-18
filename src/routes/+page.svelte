@@ -50,10 +50,13 @@
 </header>
 
 <section class="be-bold">
-    <h1>
-        <span class="be-text">Be</span>
-        <span class="animated-text">{currentWord}</span>
-    </h1>
+    <div class="content-wrapper">
+        <h1>
+            <span class="be-text">Be</span>
+            <span class="animated-text">{currentWord}</span>
+        </h1>
+        <p class="subtext">Discover and book beauty & wellness professionals near you</p>
+    </div>
 </section>
 
 <Modal {showModal} {toggleModal} />
@@ -103,11 +106,19 @@
 
     .be-bold {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         background: #000; 
         color: white;
         padding: 2rem 0; 
+        text-align: center;
+    }
+
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .be-bold h1 {
@@ -115,6 +126,12 @@
         font-weight: bold;
         display: flex; 
         align-items: center; 
+    }
+
+    .subtext {
+        font-size: 1rem;
+        margin-top: 0.5rem; 
+        color: #ddd; 
     }
 
     .be-text {
