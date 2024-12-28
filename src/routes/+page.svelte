@@ -49,6 +49,11 @@
             <span class="animated-text">{currentWord}</span>
         </h1>
         <p class="subtext">Discover and book beauty & wellness professionals near you</p>
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search services or businesses" />
+        </div>
     </div>
 </section>
 
@@ -102,6 +107,33 @@
         width: 0;
         animation: typing 1.5s steps(10) forwards, blink 0.75s step-end infinite;
     }
+
+    .search-box {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    max-width: 400px; /* Adjust the width as needed */
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box i {
+    color: #999;
+    margin-right: 0.5rem;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+    color: #333;
+}
+
 
     @keyframes typing {
         from {
